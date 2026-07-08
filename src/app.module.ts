@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config'
 
 import { PrismaModule } from './infrastructure/prisma/prisma.module'
 import { AuthModule } from './modules/auth/auth.module'
+import { RedisModule } from './infrastructure/redis/redis.module';
 
 @Module({
 	imports: [
@@ -10,7 +11,8 @@ import { AuthModule } from './modules/auth/auth.module'
 		PrismaModule,
 		ConfigModule.forRoot({
 			isGlobal: true
-		})
+		}),
+		RedisModule
 	],
 	controllers: [],
 	providers: []
