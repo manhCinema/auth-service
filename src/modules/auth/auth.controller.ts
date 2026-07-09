@@ -1,4 +1,9 @@
-import { SendOtpRequest, SendOtpResponse } from '@manhdev2/contracts/gen/auth'
+import {
+	SendOtpRequest,
+	SendOtpResponse,
+	VerifyOtpRequest,
+	VerifyOtpResponse
+} from '@manhdev2/contracts/gen/auth'
 import { Controller } from '@nestjs/common'
 import { GrpcMethod } from '@nestjs/microservices'
 
@@ -10,6 +15,10 @@ export class AuthController {
 
 	@GrpcMethod('AuthService', 'SendOtp')
 	public async sendOtp(data: SendOtpRequest): Promise<SendOtpResponse> {
-		return this.authService.sendOtp(data)
+		return await this.authService.sendOtp(data)
+	}
+	@GrpcMethod('AuthService', 'VerifyOtp')
+	public async verifyOtp(data: VerifyOtpRequest): Promise<VerifyOtpResponse> {
+		return await this.authService.verifyOtp(data)
 	}
 }
