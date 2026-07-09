@@ -34,7 +34,7 @@ export class AuthService {
 			identifier,
 			type as 'phone' | 'email'
 		)
-
+		console.log(code)
 		return { ok: true }
 	}
 
@@ -64,8 +64,8 @@ export class AuthService {
 			})
 		}
 		return {
-			accessToken: '',
-			refreshToken: ''
+			accessToken: '123465',
+			refreshToken: '123123'
 		}
 	}
 }
