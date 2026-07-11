@@ -926,6 +926,11 @@
   resolved "https://registry.npmjs.org/@lukeed/csprng/-/csprng-1.1.0.tgz#1e3e4bd05c1cc7a0b2ddbd8a03f39f6e4b5e6cfe"
   integrity sha512-Z7C/xXCiGWsg0KuKsHTKJxbWhpI3Vs5GwLfOean7MGyVFGqdRgBbAjOCh6u4bbjPc/8MJ2pZmK/0DLdCbivLDA==
 
+"@manhdev2/common@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/@manhdev2/common/-/common-1.0.0.tgz#6d907bb26c287b890a57b7db505d534a6dc21613"
+  integrity sha512-U2wSsWgkPVvVop6Kb1mfg2ljanVxZDffWPmSgQoP4fQebo39hqRrWCzvgqPMGtAjEIyIphkhchyluMi+pLmefg==
+
 "@manhdev2/contracts@^1.0.2":
   version "1.0.2"
   resolved "https://registry.npmjs.org/@manhdev2/contracts/-/contracts-1.0.2.tgz#2def5fcecbc827353c471c70ad6dcfbe48ba33dd"
