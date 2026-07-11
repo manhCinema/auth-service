@@ -8,5 +8,5 @@ export class PassportValidator {
 	public PASSPORT_ACCESS_TTL: number
 
 	@IsNumber()
-	public PASSPORT_REFRESH_TTL: string
+	public PASSPORT_REFRESH_TTL: number
 }
