@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
-/* eslint-disable @typescript-eslint/no-redundant-type-constituents */
+import { RpcStatus } from '@manhdev2/common'
 import { SendOtpRequest, VerifyOtpRequest } from '@manhdev2/contracts/gen/auth'
 import { Injectable } from '@nestjs/common'
 import { RpcException } from '@nestjs/microservices'
