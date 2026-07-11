@@ -25,6 +25,7 @@
     "@manhdev2/common": "^1.0.0",
     "@manhdev2/contracts": "^1.0.4",
     "@manhdev2/core": "^4.0.8",
+    "@manhdev2/passport": "^1.0.0",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.4",
     "@nestjs/core": "^11.0.1",

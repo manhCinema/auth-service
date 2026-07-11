@@ -1,20 +1,35 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { RpcStatus } from '@manhdev2/common'
 import { SendOtpRequest, VerifyOtpRequest } from '@manhdev2/contracts/gen/auth'
+import { PassportService, TokenPayload } from '@manhdev2/passport'
 import { Injectable } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
 import { RpcException } from '@nestjs/microservices'
 import { Account } from '@prisma/generated/client'
 
+import { AllConfigs } from '@/config'
 import { OtpService } from '@/modules/otp/otp.service'
 
 import { AuthRepository } from './auth.repository'
 
 @Injectable()
 export class AuthService {
+	private readonly ACCESS_TOKEN_TTL: number
+	private readonly REFRESH_TOKEN_TTL: number
+
 	public constructor(
 		private readonly authRepository: AuthRepository,
-		private readonly otpService: OtpService
-	) {}
+		private readonly otpService: OtpService,
+		private readonly passportService: PassportService,
+		private readonly configService: ConfigService<AllConfigs>
+	) {
+		this.ACCESS_TOKEN_TTL = this.configService.get('passport.accessTtl', {
+			infer: true
+		})
+		this.REFRESH_TOKEN_TTL = this.configService.get('passport.refreshTtl', {
+			infer: true
+		})
+	}
 	public async sendOtp(data: SendOtpRequest) {
 		const { identifier, type } = data
 		let account: Account | null
@@ -66,9 +81,18 @@ export class AuthService {
 				isEmailVerified: true
 			})
 		}
-		return {
-			accessToken: '123465',
-			refreshToken: '123123'
-		}
+		return this.generateTokens(account.id)
+	}
+	private generateTokens(userId: string) {
+		const payload: TokenPayload = { sub: userId }
+		const accessToken = this.passportService.generate(
+			String(payload.sub),
+			this.ACCESS_TOKEN_TTL
+		)
+		const refreshToken = this.passportService.generate(
+			String(payload.sub),
+			this.REFRESH_TOKEN_TTL
+		)
+		return { accessToken, refreshToken }
 	}
 }
