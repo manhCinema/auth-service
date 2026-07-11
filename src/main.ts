@@ -1,3 +1,4 @@
+import { PROTO_PATHS } from '@manhdev2/contracts'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import { MicroserviceOptions, Transport } from '@nestjs/microservices'
@@ -16,7 +17,7 @@ async function bootstrap() {
 		transport: Transport.GRPC,
 		options: {
 			package: 'auth.v1',
-			protoPath: 'node_modules/@manhdev2/contracts/proto/auth.proto',
+			protoPath: PROTO_PATHS.AUTH,
 			url,
 			loader: {
 				keepCase: true,
