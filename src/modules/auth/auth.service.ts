@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { RpcStatus } from '@manhdev2/common'
-import { SendOtpRequest, VerifyOtpRequest } from '@manhdev2/contracts/gen/auth'
+import {
+	RefreshRequest,
+	SendOtpRequest,
+	VerifyOtpRequest
+} from '@manhdev2/contracts/gen/auth'
 import { PassportService, TokenPayload } from '@manhdev2/passport'
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
@@ -83,6 +87,19 @@ export class AuthService {
 		}
 		return this.generateTokens(account.id)
 	}
+
+	public async refresh(data: RefreshRequest) {
+		const { refreshToken } = data
+		const res = this.passportService.verify(refreshToken)
+		if (!res.valid) {
+			throw new RpcException({
+				code: RpcStatus.UNAUTHENTICATED,
+				details: res.reason
+			})
+		}
+		return this.generateTokens(res.userId)
+	}
+
 	private generateTokens(userId: string) {
 		const payload: TokenPayload = { sub: userId }
 		const accessToken = this.passportService.generate(
