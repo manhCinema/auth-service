@@ -926,15 +926,15 @@
   resolved "https://registry.npmjs.org/@lukeed/csprng/-/csprng-1.1.0.tgz#1e3e4bd05c1cc7a0b2ddbd8a03f39f6e4b5e6cfe"
   integrity sha512-Z7C/xXCiGWsg0KuKsHTKJxbWhpI3Vs5GwLfOean7MGyVFGqdRgBbAjOCh6u4bbjPc/8MJ2pZmK/0DLdCbivLDA==
 
-"@manhdev2/common@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/@manhdev2/common/-/common-1.0.0.tgz#6d907bb26c287b890a57b7db505d534a6dc21613"
-  integrity sha512-U2wSsWgkPVvVop6Kb1mfg2ljanVxZDffWPmSgQoP4fQebo39hqRrWCzvgqPMGtAjEIyIphkhchyluMi+pLmefg==
+"@manhdev2/common@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/@manhdev2/common/-/common-1.0.2.tgz#6f1d897a60e586f4b075f0c2506b0c4fa73395a0"
+  integrity sha512-Bd4q1K1sCGI3TBhcYC2JMW0EL+/coSCiDBGd3sPqWP/SSI1n+aHay2FC0oHNXcONvcLsEmU44UBFV1n6m0vUeQ==
 
-"@manhdev2/contracts@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.npmjs.org/@manhdev2/contracts/-/contracts-1.0.5.tgz#bceb02eaa9ed3f8ae2d650521985b6e40da7d008"
-  integrity sha512-E/W+TDfwc725VfBay3zam1tBNZMZi/57QgmfO6urZ/fn0XmKWfQJsnUoxIWQOq29dMDgxEq60Zg8mRvQN7Ne5g==
+"@manhdev2/contracts@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.npmjs.org/@manhdev2/contracts/-/contracts-1.0.6.tgz#c66bd96fa4fe3c766ff36dc0c63b684964198451"
+  integrity sha512-ulwhZVKekhiZHkGh5HyLeuctalO1JnVA9jbiiQWlGIpBlDuhPzecZa2+x4lJu06blbweM0U+ubljs5tUDGuu/w==
   dependencies:
     "@nestjs/microservices" "^11.1.27"
     rxjs "^7.8.2"
