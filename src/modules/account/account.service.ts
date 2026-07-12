@@ -3,10 +3,14 @@ import { convertEnum } from '@manhdev2/common'
 import { GetAccountRequest } from '@manhdev2/contracts/gen/account'
 import { Injectable } from '@nestjs/common'
 import { RpcException } from '@nestjs/microservices'
-import { Role } from '@prisma/generated/enums'
 
 import { AccountRepository } from '@/modules/account/account.repository'
 
+enum Role {
+	USER = 0,
+	ADMIN = 1,
+	UNRECOGNIRED = -1
+}
 @Injectable()
 export class AccountService {
 	public constructor(private readonly accountRepository: AccountRepository) {}
