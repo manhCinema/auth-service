@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common'
 
 import { PrismaService } from '@/infrastructure/prisma/prisma.service'
+import { RedisService } from '@/infrastructure/redis/redis.service'
 import { AccountRepository } from '@/modules/account/account.repository'
 import { OtpService } from '@/modules/otp/otp.service'
 import { UserRepository } from '@/shared/repositories'
@@ -15,7 +16,8 @@ import { AccountService } from './account.service'
 		AccountRepository,
 		PrismaService,
 		UserRepository,
-		OtpService
+		OtpService,
+		RedisService
 	]
 })
 export class AccountModule {}
