@@ -6,6 +6,7 @@ import { getPassportConfig } from '@/config'
 import { PrismaService } from '@/infrastructure/prisma/prisma.service'
 import { RedisService } from '@/infrastructure/redis/redis.service'
 import { OtpService } from '@/modules/otp/otp.service'
+import { UserRepository } from '@/shared/repositories'
 
 import { AuthController } from './auth.controller'
 import { AuthRepository } from './auth.repository'
@@ -24,7 +25,8 @@ import { AuthService } from './auth.service'
 		AuthRepository,
 		PrismaService,
 		OtpService,
-		RedisService
+		RedisService,
+		UserRepository
 	]
 })
 export class AuthModule {}

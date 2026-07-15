@@ -1,9 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { Account } from '@prisma/generated/client'
-import {
-	AccountCreateInput,
-	AccountUpdateInput
-} from '@prisma/generated/models'
+import { AccountCreateInput } from '@prisma/generated/models'
 
 import { PrismaService } from '@/infrastructure/prisma/prisma.service'
 
@@ -11,35 +8,8 @@ import { PrismaService } from '@/infrastructure/prisma/prisma.service'
 export class AuthRepository {
 	public constructor(private readonly prismaService: PrismaService) {}
 
-	public async findByPhone(phone: string) {
-		return this.prismaService.account.findUnique({
-			where: {
-				phone
-			}
-		})
-	}
-	public async findByEmail(email: string) {
-		return this.prismaService.account.findUnique({
-			where: {
-				email
-			}
-		})
-	}
-
 	public async create(data: AccountCreateInput): Promise<Account> {
 		return await this.prismaService.account.create({
-			data
-		})
-	}
-
-	public async update(
-		id: string,
-		data: AccountUpdateInput
-	): Promise<Account> {
-		return await this.prismaService.account.update({
-			where: {
-				id
-			},
 			data
 		})
 	}
