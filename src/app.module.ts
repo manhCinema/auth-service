@@ -1,13 +1,21 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 
-import { databaseEnv, grpcEnv, passportEnv, redisEnv } from '@/config'
+import {
+	databaseEnv,
+	grpcEnv,
+	passportEnv,
+	redisEnv,
+	telegramEnv
+} from '@/config'
 
 import { PrismaModule } from './infrastructure/prisma/prisma.module'
 import { RedisModule } from './infrastructure/redis/redis.module'
 import { AccountModule } from './modules/account/account.module'
 import { AuthModule } from './modules/auth/auth.module'
 import { OtpModule } from './modules/otp/otp.module'
+import { TelegramModule } from './modules/telegram/telegram.module'
+import { TokenModule } from './modules/token/token.module';
 
 @Module({
 	imports: [
@@ -15,11 +23,13 @@ import { OtpModule } from './modules/otp/otp.module'
 		PrismaModule,
 		ConfigModule.forRoot({
 			isGlobal: true,
-			load: [grpcEnv, databaseEnv, redisEnv, passportEnv]
+			load: [grpcEnv, databaseEnv, redisEnv, passportEnv, telegramEnv]
 		}),
 		RedisModule,
 		OtpModule,
-		AccountModule
+		AccountModule,
+		TelegramModule,
+		TokenModule
 	],
 	controllers: [],
 	providers: []

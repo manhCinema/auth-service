@@ -4,37 +4,24 @@ import {
 	SendOtpRequest,
 	VerifyOtpRequest
 } from '@manhdev2/contracts/gen/auth'
-import { PassportService, TokenPayload } from '@manhdev2/passport'
 import { Injectable } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
 import { RpcException } from '@nestjs/microservices'
 import { Account } from '@prisma/generated/client'
 
-import { AllConfigs } from '@/config'
 import { OtpService } from '@/modules/otp/otp.service'
+import { TokenService } from '@/modules/token/token.service'
 import { UserRepository } from '@/shared/repositories'
 
 import { AuthRepository } from './auth.repository'
 
 @Injectable()
 export class AuthService {
-	private readonly ACCESS_TOKEN_TTL: number
-	private readonly REFRESH_TOKEN_TTL: number
-
 	public constructor(
 		private readonly authRepository: AuthRepository,
 		private readonly userRepository: UserRepository,
 		private readonly otpService: OtpService,
-		private readonly passportService: PassportService,
-		private readonly configService: ConfigService<AllConfigs>
-	) {
-		this.ACCESS_TOKEN_TTL = this.configService.get('passport.accessTtl', {
-			infer: true
-		})
-		this.REFRESH_TOKEN_TTL = this.configService.get('passport.refreshTtl', {
-			infer: true
-		})
-	}
+		private readonly tokenService: TokenService
+	) {}
 	public async sendOtp(data: SendOtpRequest) {
 		const { identifier, type } = data
 		let account: Account | null
@@ -53,7 +40,7 @@ export class AuthService {
 			identifier,
 			type as 'phone' | 'email'
 		)
-		console.log(code)
+		console.log(code, hash)
 		return { ok: true }
 	}
 
@@ -86,31 +73,18 @@ export class AuthService {
 				isEmailVerified: true
 			})
 		}
-		return this.generateTokens(account.id)
+		return this.tokenService.generateTokens(account.id)
 	}
 
 	public async refresh(data: RefreshRequest) {
 		const { refreshToken } = data
-		const res = this.passportService.verify(refreshToken)
+		const res = this.tokenService.verify(refreshToken)
 		if (!res.valid) {
 			throw new RpcException({
 				code: RpcStatus.UNAUTHENTICATED,
 				details: res.reason
 			})
 		}
-		return this.generateTokens(res.userId)
-	}
-
-	private generateTokens(userId: string) {
-		const payload: TokenPayload = { sub: userId }
-		const accessToken = this.passportService.generate(
-			String(payload.sub),
-			this.ACCESS_TOKEN_TTL
-		)
-		const refreshToken = this.passportService.generate(
-			String(payload.sub),
-			this.REFRESH_TOKEN_TTL
-		)
-		return { accessToken, refreshToken }
+		return this.tokenService.generateTokens(res.userId)
 	}
 }

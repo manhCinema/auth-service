@@ -931,10 +931,10 @@
   resolved "https://registry.npmjs.org/@manhdev2/common/-/common-1.0.2.tgz#6f1d897a60e586f4b075f0c2506b0c4fa73395a0"
   integrity sha512-Bd4q1K1sCGI3TBhcYC2JMW0EL+/coSCiDBGd3sPqWP/SSI1n+aHay2FC0oHNXcONvcLsEmU44UBFV1n6m0vUeQ==
 
-"@manhdev2/contracts@^1.0.9":
-  version "1.0.9"
-  resolved "https://registry.npmjs.org/@manhdev2/contracts/-/contracts-1.0.9.tgz#c7b071f0ee4dd68f64223adfa9a640e1f9d82083"
-  integrity sha512-FTfr7JAkFhmez+wJaSNnOYxLAKnEFwyH1ciFZJcNHmg60Orx0GZlfG/pGG0lxMo5iKczikqa2xZ3sF+zswvHeQ==
+"@manhdev2/contracts@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.npmjs.org/@manhdev2/contracts/-/contracts-1.0.10.tgz#23a672da682e8bf62c48ca128b59191c467961ba"
+  integrity sha512-91Igmb1xvWhHPFPUlAhlsLO79u8NRAadlMS99oAiVqdXk17NmEuKVHvMy0DYnMrwIl1HFEKFJ67nQIKfonh3zA==
   dependencies:
     "@nestjs/microservices" "^11.1.27"
     rxjs "^7.8.2"
