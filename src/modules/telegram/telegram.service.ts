@@ -1,5 +1,8 @@
 import { RpcStatus } from '@manhdev2/common'
-import { TelegramVerifyRequest } from '@manhdev2/contracts/gen/auth'
+import {
+	TelegramCompleteRequest,
+	TelegramVerifyRequest
+} from '@manhdev2/contracts/gen/auth'
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { RpcException } from '@nestjs/microservices'
@@ -9,6 +12,7 @@ import { AllConfigs } from '@/config'
 import { RedisService } from '@/infrastructure/redis/redis.service'
 import { TelegramRepository } from '@/modules/telegram/telegram.repository'
 import { TokenService } from '@/modules/token/token.service'
+import { UserRepository } from '@/shared/repositories'
 
 @Injectable()
 export class TelegramService {
@@ -21,7 +25,8 @@ export class TelegramService {
 		private readonly configService: ConfigService<AllConfigs>,
 		private readonly telegramRepo: TelegramRepository,
 		private readonly redisService: RedisService,
-		private readonly tokenService: TokenService
+		private readonly tokenService: TokenService,
+		private readonly userRepo: UserRepository
 	) {
 		this.BOT_ID = this.configService.get('telegram.botId', { infer: true })
 		this.BOT_TOKEN = this.configService.get('telegram.botToken', {
@@ -89,5 +94,33 @@ export class TelegramService {
 		const isValid = hmac === hash
 
 		return isValid
+	}
+
+	public async complete(data: TelegramCompleteRequest) {
+		const { phone, sessionId } = data
+		const raw = await this.redisService.get(`telegram_session:${sessionId}`)
+		if (!raw)
+			throw new RpcException({
+				code: RpcStatus.NOT_FOUND,
+				details: 'not found'
+			})
+		const { telegramId } = JSON.parse(raw)
+		let user = await this.userRepo.findByPhone(phone)
+		if (!user) user = await this.userRepo.create({ phone })
+		await this.userRepo.update(user.id, {
+			telegramId,
+			isPhoneVerified: true
+		})
+		const tokens = this.tokenService.generateTokens(user.id)
+
+		await this.redisService.set(
+			`telegram_session:${sessionId}`,
+			JSON.stringify(tokens),
+			'EX',
+			120
+		)
+		await this.redisService.del(`telegram_session:${sessionId}`)
+
+		return { sessionId }
 	}
 }
