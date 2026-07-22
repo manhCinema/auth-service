@@ -1,6 +1,7 @@
 import { RpcStatus } from '@manhdev2/common'
 import {
 	TelegramCompleteRequest,
+	TelegramConsumeRequest,
 	TelegramVerifyRequest
 } from '@manhdev2/contracts/gen/auth'
 import { Injectable } from '@nestjs/common'
@@ -122,5 +123,18 @@ export class TelegramService {
 		await this.redisService.del(`telegram_session:${sessionId}`)
 
 		return { sessionId }
+	}
+
+	public async consumeSession(data: TelegramConsumeRequest) {
+		const { sessionId } = data
+		const raw = await this.redisService.get(`telegram_tokens:${sessionId}`)
+		if (!raw)
+			throw new RpcException({
+				code: RpcStatus.NOT_FOUND,
+				details: 'not found'
+			})
+		const tokens = JSON.parse(raw)
+		await this.redisService.del(`telegram_tokens:${sessionId}`)
+		return tokens
 	}
 }

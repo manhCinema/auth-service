@@ -1,6 +1,8 @@
 import {
 	TelegramCompleteRequest,
 	TelegramCompleteResponse,
+	TelegramConsumeRequest,
+	TelegramConsumeResponse,
 	TelegramInitResponse,
 	TelegramVerifyRequest,
 	TelegramVerifyResponse
@@ -18,16 +20,25 @@ export class TelegramController {
 	public async getAuthUrl(): Promise<TelegramInitResponse> {
 		return this.telegramService.getAuthUrl()
 	}
+
 	@GrpcMethod('AuthService', 'TelegramVerify')
 	public async telegramVerify(
 		data: TelegramVerifyRequest
 	): Promise<TelegramVerifyResponse> {
 		return this.telegramService.verify(data)
 	}
+
 	@GrpcMethod('AuthService', 'TelegramComplete')
 	public async complete(
 		data: TelegramCompleteRequest
 	): Promise<TelegramCompleteResponse> {
 		return this.telegramService.complete(data)
+	}
+
+	@GrpcMethod('AuthService', 'TelegramConsume')
+	public async comsume(
+		data: TelegramConsumeRequest
+	): Promise<TelegramConsumeResponse> {
+		return this.telegramService.consumeSession(data)
 	}
 }
