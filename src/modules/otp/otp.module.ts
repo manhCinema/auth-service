@@ -9,4 +9,3 @@ import { OtpService } from './otp.service'
 	providers: [OtpService, RedisService]
 })
 export class OtpModule {}
-
