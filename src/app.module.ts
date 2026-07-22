@@ -6,6 +6,7 @@ import {
 	grpcEnv,
 	passportEnv,
 	redisEnv,
+	rmqEnv,
 	telegramEnv
 } from '@/config'
 
@@ -24,7 +25,14 @@ import { TokenModule } from './modules/token/token.module'
 		PrismaModule,
 		ConfigModule.forRoot({
 			isGlobal: true,
-			load: [grpcEnv, databaseEnv, redisEnv, passportEnv, telegramEnv]
+			load: [
+				grpcEnv,
+				databaseEnv,
+				redisEnv,
+				passportEnv,
+				telegramEnv,
+				rmqEnv
+			]
 		}),
 		RedisModule,
 		OtpModule,

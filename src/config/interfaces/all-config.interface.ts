@@ -2,6 +2,7 @@ import { DatabaseConfig } from './database.interface'
 import { GrpcConfig } from './grpc.interfaces'
 import { PassportConfig } from './passport.interface'
 import { RedisConfig } from './redis.interface'
+import { RmqConfig } from './rmq.interface'
 import { TelegramConfig } from './telegram.interface'
 
 export interface AllConfigs {
@@ -10,4 +11,5 @@ export interface AllConfigs {
 	redis: RedisConfig
 	passport: PassportConfig
 	telegram: TelegramConfig
+	rmq: RmqConfig
 }
