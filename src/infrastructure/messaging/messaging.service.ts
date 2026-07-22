@@ -1,4 +1,8 @@
-import { OtpRequestedEvent } from '@manhdev2/contracts'
+import {
+	EmailChangedEvent,
+	OtpRequestedEvent,
+	PhoneChangedEvent
+} from '@manhdev2/contracts'
 import { Inject, Injectable } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 
@@ -9,5 +13,11 @@ export class MessagingService {
 	) {}
 	public async otpRequested(data: OtpRequestedEvent) {
 		return this.client.emit('auth.otp.requested', data)
+	}
+	public async phoneChanged(data: PhoneChangedEvent) {
+		return this.client.emit('account.phone.changed', data)
+	}
+	public async emailChanged(data: EmailChangedEvent) {
+		return this.client.emit('account.email.changed', data)
 	}
 }

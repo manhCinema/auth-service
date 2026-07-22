@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common'
 
+import { MessagingService } from '@/infrastructure/messaging/messaging.service'
 import { PrismaService } from '@/infrastructure/prisma/prisma.service'
 import { RedisService } from '@/infrastructure/redis/redis.service'
 import { AccountRepository } from '@/modules/account/account.repository'
@@ -17,7 +18,8 @@ import { AccountService } from './account.service'
 		PrismaService,
 		UserRepository,
 		OtpService,
-		RedisService
+		RedisService,
+		MessagingService
 	]
 })
 export class AccountModule {}
